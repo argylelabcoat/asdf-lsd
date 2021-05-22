@@ -7,15 +7,15 @@ set -e
 
 case "$(uname -s)" in
 	"Darwin")
-		DOWNLOAD_URL="https://github.com/Peltoche/lsd/releases/download/v${ASDF_INSTALL_VERSION}/lsd-${ASDF_INSTALL_VERSION}-apple-darwin.tar.gz"
+		DOWNLOAD_URL="https://github.com/Peltoche/lsd/releases/download/${ASDF_INSTALL_VERSION}/lsd-${ASDF_INSTALL_VERSION}-apple-darwin.tar.gz"
 		;;
 	"Linux")
 		case "$(uname -m)" in
 			"armv7l")
-				DOWNLOAD_URL="https://github.com/Peltoche/lsd/releases/download/v${ASDF_INSTALL_VERSION}/lsd-${ASDF_INSTALL_VERSION}-arm-unknown-linux-gnueabihf.tar.gz"
+				DOWNLOAD_URL="https://github.com/Peltoche/lsd/releases/download/${ASDF_INSTALL_VERSION}/lsd-${ASDF_INSTALL_VERSION}-arm-unknown-linux-gnueabihf.tar.gz"
 				;;
 			"x86_64")
-				DOWNLOAD_URL="https://github.com/Peltoche/lsd/releases/download/v${ASDF_INSTALL_VERSION}/lsd-${ASDF_INSTALL_VERSION}-x86_64-unknown-linux-musl.tar.gz"
+				DOWNLOAD_URL="https://github.com/Peltoche/lsd/releases/download/${ASDF_INSTALL_VERSION}/lsd-${ASDF_INSTALL_VERSION}-x86_64-unknown-linux-musl.tar.gz"
 				;;
 		esac
 		;;
