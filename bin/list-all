@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
-set -e
 
-release_path="https://api.github.com/repos/Peltoche/lsd/releases"
-cmd="curl -s"
-if [  -n "$GITHUB_API_TOKEN" ]; then
-  cmd="$cmd -H 'Authorization: token $GITHUB_API_TOKEN'"
-fi
-cmd="$cmd $release_path"
+set -euo pipefail
 
-versions=$(eval $cmd | sed -nE 's/^    "tag_name": "v(.+)",$/\1/pg' | sed -n -e '1!G;h;$p')
-echo $versions
+current_script_path=${BASH_SOURCE[0]}
+plugin_dir=$(dirname "$(dirname "$current_script_path")")
+
+# shellcheck source=../lib/utils.bash
+source "${plugin_dir}/lib/utils.bash"
+
+list_all_versions | sort_versions | xargs echo
