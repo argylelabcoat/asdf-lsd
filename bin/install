@@ -9,6 +9,6 @@ mkdir -p "${ASDF_INSTALL_PATH}/bin"
 toolPath="${ASDF_INSTALL_PATH}/bin/lsd"
 
 cd "${ASDF_DOWNLOAD_PATH}"
-tar xzf lsd.tar.gz
+tar xzf lsd.tar.gz --strip=1
 mv ./lsd "${toolPath}"
 chmod +x "${toolPath}"
