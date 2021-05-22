@@ -1,20 +1,24 @@
 #!/usr/bin/env bash
+set -e
 
-set -euo pipefail
+# check ASDF environment variables
+[ -n "$ASDF_INSTALL_VERSION" ] || (echo 'Missing ASDF_INSTALL_VERSION' >&2 && exit 1)
+[ -n "$ASDF_DOWNLOAD_PATH" ] || (echo 'Missing ASDF_DOWNLOAD_PATH' >&2 && exit 1)
 
-# shellcheck source=../lib/utils.bash
-source "$(dirname "$0")/../lib/utils.bash"
+case "$(uname -s)" in
+	"Darwin")
+		DOWNLOAD_URL="https://github.com/Peltoche/lsd/releases/download/v${ASDF_INSTALL_VERSION}/lsd-${ASDF_INSTALL_VERSION}-apple-darwin.tar.gz"
+		;;
+	"Linux")
+		case "$(uname -m)" in
+			"armv7l")
+				DOWNLOAD_URL="https://github.com/Peltoche/lsd/releases/download/v${ASDF_INSTALL_VERSION}/lsd-${ASDF_INSTALL_VERSION}-arm-unknown-linux-gnueabihf.tar.gz"
+				;;
+			"x86_64")
+				DOWNLOAD_URL="https://github.com/Peltoche/lsd/releases/download/v${ASDF_INSTALL_VERSION}/lsd-${ASDF_INSTALL_VERSION}-x86_64-unknown-linux-musl.tar.gz"
+				;;
+		esac
+		;;
+esac
 
-mkdir -p "$ASDF_DOWNLOAD_PATH"
-
-# TODO: Adapt this to proper extension and adapt extracting strategy.
-release_file="$ASDF_DOWNLOAD_PATH/$TOOL_NAME-$ASDF_INSTALL_VERSION.tar.gz"
-
-# Download tar.gz file to the download directory
-download_release "$ASDF_INSTALL_VERSION" "$release_file"
-
-#  Extract contents of tar.gz file into the download directory
-tar -xzf "$release_file" -C "$ASDF_DOWNLOAD_PATH" --strip-components=1 || fail "Could not extract $release_file"
-
-# Remove the tar.gz file since we don't need to keep it
-rm "$release_file"
+curl -fL -o "${ASDF_DOWNLOAD_PATH}/lsd.tar.gz" "${DOWNLOAD_URL}"
