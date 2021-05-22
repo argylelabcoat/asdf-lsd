@@ -20,5 +20,5 @@ case "$(uname -s)" in
 		esac
 		;;
 esac
-
+echo "DOWNLOAD: ${DOWNLOAD_URL}"
 curl -fL -o "${ASDF_DOWNLOAD_PATH}/lsd.tar.gz" "${DOWNLOAD_URL}"
